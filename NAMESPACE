@@ -1,0 +1,15 @@
+exportPattern("^[[:alpha:]]+")
+exportMethods(
+    "EmiStatR" 
+)
+
+import(methods)
+import(foreach)
+import(parallel)
+import(doParallel)
+import(lattice)
+import(shiny)
+
+importFrom("grDevices", "dev.off", "pdf")
+importFrom("utils", "installed.packages", "write.table")
+
