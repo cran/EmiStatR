@@ -24,8 +24,8 @@ EmiStatR(x)
     where N is the number of structures to simulate. Each list contains
     a list with three elements: a data.frame named "out1", a data.frame 
     named "out2", a vector named "lista". "out1" contains n observations of
-    21 variables, where n is the length of the precipitation time series. The 
-    21 variables are the following time series: \cr 
+    24 variables, where n is the length of the precipitation time series. The 
+    24 variables are the following time series: \cr 
     1. id, identification number \cr
     2. Time [y-m-d h:m:s] \cr 
     3. P [mm], precipitation \cr
@@ -48,20 +48,27 @@ EmiStatR(x)
     19. B_NH4_InTank [Kg], NH4 load at entrance of the CSOT \cr
     20. C_COD_InTank [mg/l], COD concentration at entrance of the CSOT \cr
     21. C_NH4_InTank [mg/l], NH4 concentration at entrance of the CSOT  \cr
+    22. Q_Ov [l/s], overflow flow \cr
+    23  pe.season [PE], population equivalents in the catchment \cr
+    24  qs.season [l/PE/d], water consumption in the catchment \cr 
     \cr
-    The summary of the overflow data, "out2", contains 11 observations of 
-    2 variables. The 11 observations are:\cr
+    The summary of the overflow data, "out2", contains 15 observations of 
+    2 variables. The 15 observations are:\cr
     1. Period [day], length of time of the precipitation time series \cr
     2. Duration, d_Ov, [min], overflow duration\cr
     3. Frecuency, f_Ov, [ocurrence] (aprox.), overflow frecuency \cr
-    4. Volume, V_Ov, [m3], total overflow volume\cr
-    5. Flow, Q_Ov, [l/s], total overflow flow\cr
-    6. COD load, B_COD_Ov, [kg], total COD load\cr
-    7. Average COD concentration, C_COD_ov_av, [mg/l], in overflows\cr
-    8. Maximum COD concentration, C_COD_Ov_max, [mg/l], in overflows\cr
-    9. NH4 load, B_NH4_Ov, [kg], total NH4 load \cr
-    10. Average NH4 concentration,C_NH4_Ov_av, [mg/l], in overflows\cr
-    11. Maximum NH4 concentration, C_NH4_Ov_max, [mg/l], in overflows\cr
+    4. Total volume, V_Ov, [m3], total overflow volume\cr
+    5. Average flow, Q_Ov, [l/s], average overflow flow\cr
+    6. Total COD load, B_COD_Ov, [kg], total COD load in overflow\cr
+    7. Average COD concentration, C_COD_ov_av, [mg/l], in overflow\cr
+    8. 99.9th percentile COD concentration, C_COD_Ov_99.9, [mg/l], in overflow\cr 
+    9. Maximum COD concentration, C_COD_Ov_max, [mg/l], in overflow\cr
+    10. Total NH4 load, B_NH4_Ov, [kg], total NH4 load in overflow\cr
+    11. Average NH4 concentration,C_NH4_Ov_av, [mg/l], in overflow\cr
+    12. 99.9th percentile NH4 concentration, C_NH4_Ov_99.9, [mg/l], in overflow\cr
+    13. Maximum NH4 concentration, C_NH4_Ov_max, [mg/l], in overflow\cr
+    14. Structure summary results, (a descriptive text line)\cr
+    15. Volume Tank, VTank [m3], total volumen in the CSO tank\cr
     \cr 
     "Lista" contains the identification name(s) of the N structure(s). 
     If export is allowed then three 
@@ -80,34 +87,39 @@ execute {EmiStatR} function
 }
 }}
 
+\author{
+J.A. Torres-Matallana; K. Klepiszewski; U. Leopold; G.B.M. Heuvelink
+}
+
 \examples{
 ## running GUI 
 library("EmiStatR")
 
 appDir <- system.file("shiny", package = "EmiStatR")
-setwd(appDir)
 
 ## (uncomment for running)
+# setwd(appDir)
 # runApp("EmiStatR_input")
 # runApp("EmiStatR_inputCSO")
 
 ## executing EmiStatR
-input.default <- input() 
-sim   <- EmiStatR(input.default)
+input.default <- input()
 
-str(sim)
+## uncomment following lines to execute
+# sim   <- EmiStatR(input.default)
+# str(sim)
 
 ## a dummy example of plot
-par(mfrow=c(2,2), oma = c(0,0,2,0))
-plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[3]], typ="l", col="blue", 
-     xlab = "time", ylab = colnames(sim[[1]][[1]])[3], main = "Precipitation")
-plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[10]], typ="l", col="blue", 
-     xlab = "time", ylab = colnames(sim[[1]][[1]])[10], main = "CSO, volume")
-plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[13]], typ="l", col="blue", 
-     xlab = "time", ylab = colnames(sim[[1]][[1]])[13], main = "CSO, COD concentration")
-plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[14]], typ="l", col="blue", 
-     xlab = "time", ylab = colnames(sim[[1]][[1]])[14], main = "CSO, NH4 concentration")
-mtext(paste("Structure", sim[[1]][[3]][[1]]), outer=TRUE, cex = 1.5)
+# par(mfrow=c(2,2), oma = c(0,0,2,0))
+# plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[3]], typ="l", col="blue", 
+#      xlab = "time", ylab = colnames(sim[[1]][[1]])[3], main = "Precipitation")
+# plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[10]], typ="l", col="blue", 
+#      xlab = "time", ylab = colnames(sim[[1]][[1]])[10], main = "CSO, volume")
+# plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[13]], typ="l", col="blue", 
+#      xlab = "time", ylab = colnames(sim[[1]][[1]])[13], main = "CSO, COD concentration")
+# plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[14]], typ="l", col="blue", 
+#      xlab = "time", ylab = colnames(sim[[1]][[1]])[14], main = "CSO, NH4 concentration")
+# mtext(paste("Structure", sim[[1]][[3]][[1]]), outer=TRUE, cex = 1.5)
 }
 
 \keyword{methods}

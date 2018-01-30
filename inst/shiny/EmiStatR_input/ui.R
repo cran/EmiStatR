@@ -1,15 +1,17 @@
-# creation of input ui.R file for UI of the EmiStat model
+# creation of input ui.R file for UI of the EmiStatR model
 # author: Arturo Torres, Kai Klepiszewski
 # organization: LIST
-# date: 06.02.2015
+# date1: 06.02.2015
+# date2: 05.09.2017 - 07.09.2017
 
 library(shiny)
+library(shinyFiles) # shinyDirButton()
 
 # Define UI for application
 shinyUI(fluidPage(
   
   #  Application title
-  titlePanel("General data"),
+  titlePanel("General input data"),
   
   # Sidebar with sliders 
   # options
@@ -18,20 +20,20 @@ shinyUI(fluidPage(
       h3("1. Wastewater"),
       # Simple integer interval
       sliderInput("qs", "Water consumption, qs [l/(PE d)]:", 
-                  min=0, max=500, value=150),
+                  min=0, max=500, value=155),
       
       # Simple interval interval
       sliderInput("CODs", "Pollution COD [g/(PE d)]:", 
-                  min = 0, max = 500, value = 120),
-
+                  min = 0, max = 500, value = 104),
+      
       # Simple interval interval
       sliderInput("NH4s", "Pollution NH4 [g/(PE d)]:", 
-                  min = 0, max = 500, value = 11),
+                  min = 0, max = 50, value = 3.5, step = 0.1),
       
       h3("2. Infiltration water"),
       # Decimal interval with step value
       sliderInput("qf", "Inflow, qf [l/(s ha)]:", 
-                  min=0, max=.15, value=0.05, step= 0.01),
+                  min=0, max=.15, value=0.035, step= 0.001),
       
       # Simple interval interval
       sliderInput("CODf", "Pollution COD [g/(PE d)]:", 
@@ -39,54 +41,45 @@ shinyUI(fluidPage(
       
       # Simple interval interval
       sliderInput("NH4f", "Pollution NH4 [g/(PE d)]:", 
-                  min = 0, max = 500, value = 0),
+                  min = 0, max = 50, value = 0, step = 0.1),
       
       
       h3("3. Rainwater"),
       # Simple interval interval
       sliderInput("CODr", "Pollution COD [mg/l]:", 
-                  min = 0, max = 500, value = 107),
+                  min = 0, max = 500, value = 71),
       
       # Simple interval interval
       sliderInput("NH4r", "Pollution NH4 [mg/l]:", 
-                  min = 0, max = 500, value = 0),
+                  min = 0, max = 50, value = 0, step = 0.1),
       
-      #text input
-      textInput("stat", label = h5("Rain measurement station:"), 
-                value = "Enter name station..."),
+      # selection of dataset
+      radioButtons("radio.data", h5("Choose rain time series from available..."),
+                   choices = list(None="", 
+                                  'P1' = "1", 
+                                  'Esch-sur-Sure 2010'= "2",
+                                  'User defined' = "3"), 
+                   selected = ""),
       
-#       # Specification of range within an interval
-#       sliderInput("peri", "Period:",
-#                   min = 1900, max = 2100, value = c(2010,2010)),
+      
+      htmlOutput("fileInput"),
       
       
-      fileInput('file1', 'Choose rain time series as CSV File...',
-                accept=c('text/csv', 
-                         'text/comma-separated-values,text/plain', 
-                         '.csv')),
-      tags$hr(),
-      checkboxInput('header', 'Header', TRUE),
-      radioButtons('sep', 'Separator',
-                   c(Comma=',',
-                     Semicolon=';',
-                     Tab='\t'),
-                   ','),
-      radioButtons('quote', 'Quote',
-                   c(None='',
-                     'Double Quote'='"',
-                     'Single Quote'="'"),
-                   '"'),
+      # tags$hr(),
       
+      
+      htmlOutput("textInput"),
+
       plotOutput("plot1", width = 400, height = 300),     
-  
-      h3("4. Storm water runoff"),
-      # Simple interval interval
-      sliderInput("tf", "Flow time in the sewer system [min]:", 
-                  min = 0, max = 500, value = 20),
+      
+      shinyDirButton("directory", "Chose directory", "Directory to save data"),
       
       # make an action button
-       actionButton("save", label = "Save")
-   ),
+      htmlOutput("actionButton.save"),
+      
+      # make a new action button
+      actionButton("close", label = "Close")
+    ),
     
     # Show a table summarizing the values entered
     mainPanel(
@@ -99,11 +92,11 @@ shinyUI(fluidPage(
       h3("3. Rainwater"),
       tableOutput("valores3"),
       #tableOutput('contents'),
-      tableOutput('valores4'),
-      #renderPlot('plot1'),
-      h3("4. Stormwater runoff"),
-      tableOutput('valores5')
-      )
+      tableOutput('valores4'), 
+      # renderPlot('plot1'),
+      h3("4. Directory"),
+      textOutput('valores5')
+    )
   )
 ))
 

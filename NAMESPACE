@@ -1,15 +1,19 @@
 exportPattern("^[[:alpha:]]+")
-exportMethods(
-    "EmiStatR" 
-)
+
+export("IsReg", "CInp2TS", "Agg", "Volume2Level")
+
+exportMethods("EmiStatR")
 
 import(methods)
-import(foreach)
-import(parallel)
-import(doParallel)
-import(lattice)
 import(shiny)
 
-importFrom("grDevices", "dev.off", "pdf")
-importFrom("utils", "installed.packages", "write.table")
-
+importFrom(utils, installed.packages, write.table, read.csv, head)
+importFrom(grDevices, dev.off, pdf, dev.new, png)
+importFrom(graphics, abline, axis, mtext, par, plot)
+importFrom(stats, deltat, end, quantile, aggregate, approx)
+importFrom(xts, xts, .indexwday, .indexmon, as.xts)
+importFrom(zoo, na.approx, is.regular, coredata, index, plot.zoo)
+importFrom(foreach, foreach, "%dopar%", "%do%")
+importFrom(parallel, detectCores, stopCluster, makePSOCKcluster)
+importFrom(lattice, xyplot)
+importFrom(doParallel, registerDoParallel)

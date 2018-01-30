@@ -2,17 +2,17 @@
 \alias{P1}
 \docType{data}
 \title{
-An example time series for the EmiStatR package
+An example of input time series for the EmiStatR package
 }
 \description{
-This dataset is a list that contains a data.frame with two columns: Time [y-m-d h:m:s] and Precipitation P [mm]. 
-The station of measuring, Dahl, is located close to the catchment of the combined sewer overflow tank at Goesdorf, Grand-Duchy of Luxembourg.
+This dataset is a list that contains a data.frame with two columns: time [y-m-d h:m:s] and precipitation depth, P [mm]. 
+The dataset correspond to measurements for January 2016 with time steps of 10 minutes at rain gauge station, Dahl, located close to the sub-catchment of the combined sewer overflow chamber at Goesdorf, Grand-Duchy of Luxembourg. 
 }
 \usage{data("P1")}
 \format{
   A data frame with 4464 observations on the following 2 variables.
   \describe{
-    \item{\code{time}}{a POSIXct}
+    \item{\code{time}}{a POSIXct vector}
     \item{\samp{P [mm]}}{a numeric vector}
   }
 }
