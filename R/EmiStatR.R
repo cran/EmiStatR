@@ -1,7 +1,7 @@
-# model EmiStatR version 1.2.0.4
+# model EmiStatR version 1.2.0.6
 # author: J.A. Torres-Matallana, K. Klepiszewski, U. Leopold, G.B.M. Heuvelink
 # organization: LIST, WUR
-# date: 11.02.2015 - 04.10.2017
+# date: 11.02.2015 - 08.02.2018
 
 # ns    : name of the structure
 # 
@@ -108,7 +108,7 @@ setMethod("EmiStatR", signature = "input",
             zero <- slot(x, "zero")
             # mc <- slot(x, "mc")
             folder <- slot(x, "folder")
-            folderOutput <- slot(x, "folderOutput")
+            #folderOutput <- slot(x, "folderOutput")
             cores <- slot(x, "cores")
             ww <- slot(x, "ww")
             inf <- slot(x, "inf")
@@ -448,12 +448,17 @@ setMethod("EmiStatR", signature = "input",
             # a <- "E1 E2 E3"
             # gsub("[^0-9]", "", unlist(lista))
             
-            # assembling output table
-            # getwd()
-            setwd(folderOutput)
+            # # assembling output table
+            # setwd(folderOutput)
+            # dir.create("EmiStatR_output", showWarnings=FALSE)
+            # dir.output <- paste(folderOutput, "/EmiStatR_output", sep="")
+            # setwd(dir.output)
+            
+            setwd(dir.current)
             dir.create("EmiStatR_output", showWarnings=FALSE)
-            dir.output <- paste(folderOutput, "/EmiStatR_output", sep="")
+            dir.output <- paste(dir.current, "/EmiStatR_output", sep="")
             setwd(dir.output)
+            
             
             # parallel computing
             # install.packages("foreach")
@@ -808,7 +813,8 @@ setMethod("EmiStatR", signature = "input",
                                 
                                 # writing output                                            <-------------------
                                 if(export == 1){
-                                  setwd(paste(folderOutput,"/EmiStatR_output", sep=""))
+                                  # setwd(paste(folderOutput,"/EmiStatR_output", sep=""))
+                                  setwd(dir.output)
                                   
                                   write.table(get(paste("out1_",lista[i], sep="")), file = paste("out1_",lista[i],".csv",sep=""), 
                                               sep = ",", qmethod = "double", row.names=FALSE)
@@ -821,7 +827,7 @@ setMethod("EmiStatR", signature = "input",
                                 # st <- lapply(st.ls, FUN=get)
 
                                 input.gen <- list(spatial = spatial, zero = zero, folder = folder, 
-                                                  folderOutput = folderOutput, cores = cores,
+                                                  cores = cores,
                                                   ww = ww, inf = inf, rw = rw, prec = P1, 
                                                   st = li,
                                                   pe.daily.file = pe.daily.file, pe.weekly = pe.weekly, pe.seasonal = pe.seasonal,

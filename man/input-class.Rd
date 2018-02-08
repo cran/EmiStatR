@@ -26,8 +26,8 @@ Objects can be created by calls of the form \code{input()} or \code{new("input")
     %(not implemented).} 
     \item{\code{folder}:}{Object of class \code{"character"}, path of the Shiny 
     applications. Default \code{system.file("shiny", package = "EmiStatR")}} 
-    \item{\code{folderOutput}:}{Object of class \code{"character"}, path of the 
-    directory to save outputs. By default the same as \code{folder}. }
+    %\item{\code{folderOutput}:}{Object of class \code{"character"}, path of the 
+    %directory to save outputs. By default the same as \code{folder}. }
     \item{\code{cores}:}{Object of class \code{"numeric"}, number of CPU cores 
     to be used in parallel computing. If cores = 0 no parallel computation is  
     done. Default 1.}
@@ -160,7 +160,7 @@ E1 <- list(id = 1, ns = "FBH Goesdorf", nm = "Goesdorf", nc = "Obersauer", numc 
 
 # defining Input objet
 input.user <- input(spatial = 0, zero = 1e-5, folder = system.file("shiny", package = "EmiStatR"),
-                    folderOutput = system.file("shiny", package = "EmiStatR"), cores = 1,
+                    cores = 1,
                     ww = list(qs = 150, CODs = 104, NH4s = 4.7), 
                     inf = list(qf= 0.04, CODf = 0, NH4f =0),
                     rw = list(CODr = 0, NH4r = 0, stat = station), 
