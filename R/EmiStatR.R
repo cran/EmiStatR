@@ -126,6 +126,13 @@ setMethod("EmiStatR", signature = "input",
             export <- slot(x, "export")
             
             #================================================================================
+            ## checking if P or Runoff_Volume as input
+            if(colnames(P1)[2] == "Runoff_Volume" | colnames(P1)[2] == "runoff_volume"){
+              Runoff_Volume <- TRUE
+            }else Runoff_Volume <- FALSE
+              
+            #================================================================================
+            #================================================================================
             dir.current <- getwd()
             #================================================================================
             mc <- 0
@@ -532,12 +539,20 @@ setMethod("EmiStatR", signature = "input",
                                 ## computation of precipitation depth
                                 # p[,3] <- p[,3]
                                 
-                                ## computation of intensity
-                                p[,4] <- p[,3]/dt*60
+                                
                                 
                                 ## computation
                                 # p[,5] <- p[,3]*Aimp[i+1]*af[i]*10 # V_r_i (v1.2.0.3)
-                                p[,5] <- 0.1*p[,3]*dt*(Cimp[i+1]*Aimp[i+1] + Cper[i+1]*(Atotal[i+1] - Aimp[i+1])) # V_r_i
+                                if(Runoff_Volume == TRUE){
+                                  p[,5] <- p[,3] # V_r_i
+                                }else{
+                                  ## computation of intensity
+                                  p[,4] <- p[,3]/dt*60
+                                  
+                                  ## computation of rain_volume
+                                  p[,5] <- 10*p[,3]*(Cimp[i+1]*Aimp[i+1] + Cper[i+1]*(Atotal[i+1] - Aimp[i+1])) # V_r_i
+                                }
+                                
                                 p[,6] <- Qt24[,i]*.06*dt # V_dw_i
                                 p[,7] <- ifelse(p[,5] <= zero, zero, p[,6]/p[,5]) # cs_mr_i
                                 

@@ -48,8 +48,14 @@ Objects can be created by calls of the form \code{input()} or \code{new("input")
     Second element \code{NH4r} (numeric), rainwater pollution - NH4 concentration 
     [mg/l]. Third element \code{stat} (character), name of the rain measurement 
     station.}
-    \item{\code{P1}:}{Object of class \code{"data.frame"} with columns named tt 
-    (date and time), P (rain time series), and i (intensity). }
+    \item{\code{P1}:}{Object of class \code{"data.frame"} with two columns named 
+    1. "time" for specifying the date and time in format YYYY-m-d HH:MM:SS, 
+    2. "P [mm]" for specifying the depth values of the rainfall time series in millimeters. 
+    Optionally, instead of rainfall depth values can be provided values of direct runoff 
+    in cubic meters entering in the system. 
+    If runoff values are provided then the second column containing these values
+    should be named as "Runoff_Volume" or "runoff_volume", 
+    otherwise this column is treated as rainfall depth.}
     \item{\code{st}:}{Object of class \code{"list"}. This object contains n lists, 
     where n is the number of structures to simulate. Every list should contain 12
     elements: \code{id}, identification number [-]; \code{ns}, name of the structure [-];
@@ -151,9 +157,9 @@ station <- "Esch-sur-Sure"
 
 # defining estructures E1
 E1 <- list(id = 1, ns = "FBH Goesdorf", nm = "Goesdorf", nc = "Obersauer", numc = 1, 
-           use = "R/I", Atotal = 36, Aimp = 25.2, Cimp = 0.80, Cper = 0.30,
-           tfS = 1, pe = 650, Qd = 5, 
-           Dd = 0.15, Cd = 0.18, V = 190, lev.ini = 0.10,
+           use = "R/I", Atotal = 30, Aimp = 5, Cimp = 0.28, Cper = 0.07,
+           tfS = 1, pe = 611, Qd = 5, 
+           Dd = 0.15, Cd = 0.67, V = 190, lev.ini = 0.57,
            lev2vol = list(lev = c(.06, 1.10, 1.30, 3.30), 
                           vol = c(0, 31, 45, 190))
            )
