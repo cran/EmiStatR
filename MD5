@@ -1,11 +1,12 @@
-b29dc64c6a3e617bdfe6406ec64a35ca *DESCRIPTION
-3736285758b2f496d2d632e90e642719 *NAMESPACE
+5f6d888aec17656bcddc1c704e8d4e5f *DESCRIPTION
+5e5791f808cdb73db91e615a0fdcb26a *NAMESPACE
 29d83e016487f224bea2a83cc9783b84 *R/Agg.R
 73c907a0b4831f04744a2aca5d69d32b *R/CInp2TS.R
 7fc12fc5032702e7e288cca402859edb *R/Class-input.R
 c3f27672c75cb2eb7076a6b4710f0803 *R/Delay.R
 4d5c98421c4f857cdf06abfe4109beeb *R/EmiStatR.R
 7eb8dde8246fc9088150b4a81f230c55 *R/IsReg.R
+11518f579d9ba18a37f8e68e0c076c95 *R/Level2Volume.R
 e46c791206f61155ee229282e834bdd9 *R/Volume2Level.R
 113e4e9b305e5770e2c92258a42ac9de *data/Esch_Sure2010.rda
 ea869b231e7f272b6922b57d9bc0467f *data/P1.rda
@@ -38,9 +39,10 @@ d8a4cc4754e666fa0ac4e6c2350ff539 *inst/shiny/EmiStatR_inputCSO/inputCSO/level-vo
 99950fc4bc370f8a744f8f2cf1beef65 *man/CInp2TS.Rd
 1ee063dfecae93a14ca49a54c4ece4e0 *man/Delay.Rd
 01a0e56edb2f8016a220a4424f6b80e7 *man/EmiStatR-methods.Rd
-4affb5ded16bed3e8642c7dd61350d22 *man/EmiStatR-package.Rd
+94cc2894b10ae4989d8745bbc730a47f *man/EmiStatR-package.Rd
 c9f84c6dfb856b65fa1a3cdcb04b8c99 *man/Esch_Sure2010.Rd
 1fac7278e96433c510a394c95514c23f *man/IsReg.Rd
+22d85f5ba933b8baa6d893b65d2c8e1d *man/Level2Volume.Rd
 fb3fc35547e60f2b2953aa54f4ceea07 *man/P1.Rd
 af5aafc8ca0c92fdcb1a8ca0833adc64 *man/P1_20111216.Rd
 30818a52b89d5a5c545ccf8ecbc82844 *man/Volume2Level.Rd

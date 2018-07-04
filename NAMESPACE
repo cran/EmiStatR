@@ -1,6 +1,6 @@
 exportPattern("^[[:alpha:]]+")
 
-export("IsReg", "CInp2TS", "Agg", "Volume2Level")
+export("IsReg", "CInp2TS", "Agg", "Volume2Level", "Level2Volume")
 
 exportMethods("EmiStatR")
 
