@@ -2,7 +2,7 @@ Package: EmiStatR
 Type: Package
 Title: Emissions and Statistics in R for Wastewater and Pollutants in
         Combined Sewer Systems
-Version: 1.2.1.1
+Version: 1.2.1.2
 Date: 2018-07-04
 Author: J.A. Torres-Matallana [aut, cre]
     K. Klepiszewski [aut, cre]
@@ -20,6 +20,7 @@ Depends: R (>= 2.10), methods, shiny
 Imports: utils, grDevices, graphics, stats, xts, zoo, foreach,
         parallel, lattice, doParallel
 NeedsCompilation: no
-Packaged: 2018-07-04 07:50:00 UTC; atorres
+StagedInstall: no
+Packaged: 2019-02-28 16:58:53 UTC; ripley
 Repository: CRAN
-Date/Publication: 2018-07-04 08:40:03 UTC
+Date/Publication: 2019-03-01 07:07:04 UTC
