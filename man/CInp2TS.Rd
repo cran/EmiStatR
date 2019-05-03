@@ -63,20 +63,20 @@ J.A. Torres-Matallana; U. Leopold
 
 \examples{
 library(EmiStatR)
-library(xts)
+library(zoo)
 
 data("Esch_Sure2010")
+data("qs_factor")
 
 cinp            <- 150 # water consumption [m3/h]
 prec            <- Esch_Sure2010[1:1000,] # selecting just the first 1,000 rows
-cinp.daily.dir  <- system.file("shiny/EmiStatR_inputCSO/inputCSO", package = "EmiStatR")
-cinp.daily.file <- paste(cinp.daily.dir, "/qs_factor.csv", sep="")
+
+cinp.daily.file <- qs_factor
 cinp.weekly     <- list(mon=1, tue=.83, wed=.83, thu=.83, fri=1, sat=1.25, sun=1.25)  
 # factors average to 1
 cinp.seasonal   <- list(jan=.79, feb=.79, mar=1.15, apr=1.15, may=1.15, jun=1.15,
                         jul=1.15, aug=1.15, sep=1.15, oct=1.15, nov=.79, dec=.79) 
 # factors average to 1
-
 ts1 <- CInp2TS(cinp, prec, cinp.daily.file, cinp.weekly, cinp.seasonal)
 str(ts1)
 
@@ -86,7 +86,8 @@ summary(ts1[["xts"]])
 dev.new()
 par(mfrow = c(4,1))
 plot(index(ts1[["xts"]][,1]), ts1[["xts"]][,1], type = "l", 
-     xlab = "", ylab = "Daily factor [-]", main="Daily factor time series")
+     xlab = "", ylab = "Daily factor [-]", 
+     main="Daily factor time series")
 plot(index(ts1[["xts"]][,1]), ts1[["xts"]][,2], type = "l", 
      xlab = "", ylab = "Water consumption [l/(PE d)]", 
      main="Daily water consumption time series")

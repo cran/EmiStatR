@@ -24,8 +24,8 @@ Objects can be created by calls of the form \code{input()} or \code{new("input")
     %and water quality parameters (not implemented), 3 for Monte Carlo simulations 
     %and Latin Hypercube sampling with hydraulic and water quality parameters 
     %(not implemented).} 
-    \item{\code{folder}:}{Object of class \code{"character"}, path of the Shiny 
-    applications. Default \code{system.file("shiny", package = "EmiStatR")}} 
+    \item{\code{folder}:}{Object of class \code{"character"}, path for the output.    
+    Default \code{getwd()}} 
     %\item{\code{folderOutput}:}{Object of class \code{"character"}, path of the 
     %directory to save outputs. By default the same as \code{folder}. }
     \item{\code{cores}:}{Object of class \code{"numeric"}, number of CPU cores 
@@ -56,14 +56,28 @@ Objects can be created by calls of the form \code{input()} or \code{new("input")
     If runoff values are provided then the second column containing these values
     should be named as "Runoff_Volume" or "runoff_volume", 
     otherwise this column is treated as rainfall depth.}
-    \item{\code{st}:}{Object of class \code{"list"}. This object contains n lists, 
-    where n is the number of structures to simulate. Every list should contain 12
-    elements: \code{id}, identification number [-]; \code{ns}, name of the structure [-];
-    \code{nm}, name of the municipality [-]; \code{nc}, name of the catchment [-];
-    \code{numc}, number of the catchment [-]; \code{use}, use of the soil [-]; 
-    \code{Ages}, total area [ha]; \code{Ared}, reduced area - impervious area [ha];
-    \code{tfS}, time flow structure [min]; \code{pe}, population equivalent [PE];
-    \code{Qd}, throttled outflow [l/s]; and \code{V}, volume [m3].}
+    \item{\code{st}:}{Object of class 
+    \code{"list"}. This object contains n lists, 
+    where n is the number of structures to simulate. Every list should contain 18
+    elements: 
+    \code{id}, numeric, identification number [-]; 
+    \code{ns}, character, name of the structure [-];
+    \code{nm}, character, name of the municipality [-]; 
+    \code{nc}, character, name of the catchment [-];
+    \code{numc}, numeric, number of the catchment [-]; 
+    \code{use}, character, use of the soil [-]; 
+    \code{Atotal}, numeric, total area [ha]; 
+    \code{Aimp}, numeric, impervious area [ha];
+    \code{tfS}, numeric, time flow structure [time step]; 
+    \code{pe}, numeric, population equivalent [PE];
+    \code{V}, numeric, volume [m3]; 
+    \code{lev2vol}, list of 2, lev and vol, defining the curve lev (level [m]) 
+    to vol (volume [m3]);
+    \code{Qd}, numeric, maximum throttled outflow [l/s]; 
+    \code{Dd}, numeric, orifice diameter [m];
+    \code{Cd}, numeric, orifice coefficient [-];  
+    \code{Cimp}, numeric, coefficient for impervious area [-]; and 
+    \code{Cper}, numeric, coefficient for pervious area [-].}
     
     \item{\code{pe.ts.file}:}{Object of class \code{"character"} with the path and file 
     name of the comma separated value (csv) file that contains the montly (seasonal) 
@@ -76,12 +90,10 @@ Objects can be created by calls of the form \code{input()} or \code{new("input")
     Default empty string (""). 
     If not empty string is defined then \code{pe.daily.file}, \code{pe.weekly}, \code{pe.seasonal}
     are omitted.}
-    \item{\code{pe.daily.file}:}{Object of class \code{"character"} with the path and file 
-    name of the comma separated value (csv) file that contains the daily factors for population
+    \item{\code{pe.daily.file}:}{Object of class \code{"data.frame"} that contains the daily factors for population
     equivalent. The first 
-    column of this file should be the time in format "H:M:S" and should span for 24 hours. 
-    The second column should contain the factors as numeric class for the specified time. 
-    These factors must average to 1.}
+    column should be the time in format "H:M:S" and should span for 24 hours. 
+    The second column should contain the factors as numeric class for the specified time.     These factors must average to 1.}
     \item{\code{pe.weekly}:}{Object of class \code{"list"} that contains the factors for population
     equivalent per day of the week with 7 elements called "mon" for Monday, "tue" for Tuesday, 
     "wed" for Wednesday, "thu" for Thursday, "fri" for Friday, "sat" for Saturday, and "sun" for Sunday. 
@@ -144,28 +156,26 @@ J.A. Torres-Matallana
 %%%  ~~or \code{\linkS4class{CLASSNAME}} for links to other classes ~~~
 %}
 \examples{
-showClass("input")
-
-## running EmiStatR with default input
+## loading EmiStatR
 library("EmiStatR")
+showClass("input")
 
 ## running EmiStatR with user defined input
 data("Esch_Sure2010")
-
 P1 <- Esch_Sure2010[1:1000,]  # selecting just the first 1,000 rows
 station <- "Esch-sur-Sure"
 
 # defining estructures E1
 E1 <- list(id = 1, ns = "FBH Goesdorf", nm = "Goesdorf", nc = "Obersauer", numc = 1, 
-           use = "R/I", Atotal = 30, Aimp = 5, Cimp = 0.28, Cper = 0.07,
-           tfS = 1, pe = 611, Qd = 5, 
-           Dd = 0.15, Cd = 0.67, V = 190, lev.ini = 0.57,
+           use = "R/I", Atotal = 36, Aimp = 25.2, Cimp = 0.80, Cper = 0.30,
+           tfS = 1, pe = 650, Qd = 5, 
+           Dd = 0.15, Cd = 0.18, V = 190, lev.ini = 0.10,
            lev2vol = list(lev = c(.06, 1.10, 1.30, 3.30), 
-                          vol = c(0, 31, 45, 190))
+                          vol = c(0.5, 31, 45, 190))
            )
 
 # defining Input objet
-input.user <- input(spatial = 0, zero = 1e-5, folder = system.file("shiny", package = "EmiStatR"),
+input.user <- input(spatial = 0, zero = 1e-5, folder = getwd(),
                     cores = 1,
                     ww = list(qs = 150, CODs = 104, NH4s = 4.7), 
                     inf = list(qf= 0.04, CODf = 0, NH4f =0),
@@ -177,7 +187,7 @@ str(input.user)
 # invoking EmiStatR
 sim <- EmiStatR(input.user)
 
-## a dummy example of plot
+## a visualisation example 
 dev.new()
 par(mfrow=c(2,2), oma = c(0,0,2,0))
 plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[3]], typ="l", col="blue", 
@@ -189,7 +199,6 @@ plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[13]], typ="l", col="blue",
 plot(x=sim[[1]][[1]][[2]], y=sim[[1]][[1]][[14]], typ="l", col="blue", 
      xlab = "time", ylab = colnames(sim[[1]][[1]])[14], main = "CSO, NH4 concentration")
 mtext(paste("Structure", sim[[1]][[3]][[1]]), outer=TRUE, cex = 1.5)
-
 }
 
 \keyword{classes}

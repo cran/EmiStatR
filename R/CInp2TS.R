@@ -2,7 +2,7 @@
 # author: J.A. Torres-Matallana, U. Leopold
 # organization: Luxembourg Institute of Science and technology (LIST)
 #               Wagenigen university and Research Centre (WUR)   
-# date: 24.08.2016 - 21.09.2016
+# date: 24.08.2016 - 02.05.2019
 
 CInp2TS <- function(cinp, prec, cinp.daily.file, cinp.weekly, cinp.seasonal){
 #   cinp            <- 611 # Goesdorf 2010
@@ -45,7 +45,7 @@ CInp2TS <- function(cinp, prec, cinp.daily.file, cinp.weekly, cinp.seasonal){
   # plot.xts(p.ts)
 
   ## reading daily population equivalent factors
-  daily.data   <- read.csv(file = cinp.daily.file, header = T)
+  daily.data   <- cinp.daily.file
   
   a            <- IsReg(data = daily.data, format="%H:%M:%S", tz="UTC")
   # a[1]

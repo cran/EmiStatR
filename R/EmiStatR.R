@@ -1,7 +1,8 @@
-# model EmiStatR version 1.2.0.6
+# model EmiStatR version 1.2.2.0
 # author: J.A. Torres-Matallana, K. Klepiszewski, U. Leopold, G.B.M. Heuvelink
-# organization: LIST, WUR
-# date: 11.02.2015 - 08.02.2018
+# organization: Luxembourg Institute of Science and technology (LIST)
+#               Wagenigen university and Research Centre (WUR) 
+# date: 11.02.2015 - 02.05.2019
 
 # ns    : name of the structure
 # 
@@ -94,11 +95,11 @@ setMethod("EmiStatR", signature = "input",
             #            ww = list(qs = 150, CODs = 50, NH4s = 1.4), inf = list(qf= 0.05, CODf = 0, NH4f =0),
             #            rw = list(CODr = 80, NH4r = 0, stat = "Dahl"), P1 = Esch_Sure2010,
             #            st = list(E1=E1),
-            #            pe.daily.file = paste(system.file("shiny/EmiStatR_inputCSO/inputCSO", package = "EmiStatR"), "/pe_factor.csv" ,sep=""),
+            #            pe.daily.file = pe_factor, # after loading data(pe_factor)
             #            pe.weekly     = list(mon=1, tue=.83, wed=.83, thu=.83, fri=1, sat=1.25, sun=1.25),
             #            pe.seasonal   = list(jan=.79, feb=.79, mar=.79, apr=1.15, may=1.15, jun=1.15,
             #                                 jul=1.15, aug=1.15, sep=1.15, oct=1.15, nov=.79, dec=.79),
-            #            qs.daily.file = paste(system.file("shiny/EmiStatR_inputCSO/inputCSO", package = "EmiStatR"), "/qs_factor.csv" ,sep=""),
+            #            qs.daily.file = qs_factor, # after loading data(qs_factor)
             #            qs.weekly     = list(mon=1, tue=1, wed=1, thu=1, fri=1, sat=1, sun=1),
             #            qs.seasonal   = list(jan=1, feb=1, mar=1, apr=1, may=1, jun=1,
             #                                 jul=1, aug=1, sep=1, oct=1, nov=1, dec=1),
@@ -127,7 +128,8 @@ setMethod("EmiStatR", signature = "input",
             
             #================================================================================
             ## checking if P or Runoff_Volume as input
-            if(colnames(P1)[2] == "Runoff_Volume" | colnames(P1)[2] == "runoff_volume"){
+            if(length(P1)==0){Runoff_Volume <- FALSE
+            }else if(colnames(P1)[2] == "Runoff_Volume" | colnames(P1)[2] == "runoff_volume"){
               Runoff_Volume <- TRUE
             }else Runoff_Volume <- FALSE
               
@@ -137,30 +139,37 @@ setMethod("EmiStatR", signature = "input",
             #================================================================================
             mc <- 0
             if (mc == 0){  # no MC runs
-              # load variables
-              dir.shiny <- folder
-              dir.input <- paste(dir.shiny, "/EmiStatR_input/input", sep="")
-              setwd(dir.input)
+              ## load variables
+              # dir.shiny <- folder
+              # dir.input <- paste(dir.shiny, "/EmiStatR_input/input", sep="")
+              # setwd(dir.input)
               
               e1 <- new.env()
               
               ifelse(length(ww) == 0, 
-                     {load("wastewater.RData")
-                       ww <- get("ww")},
+                     {
+                       data("ww", envir = e1)
+                       ww <- get("ww", envir = e1)
+                       },
                      0)
               
               ifelse(length(inf) == 0,
-                     {load("infiltration.RData")
-                       inf <- get("inf")},
+                     {data("inf", envir=e1)
+                       inf <- get("inf", envir = e1)
+                       },
                      0)
               
               ifelse(length(rw) == 0,
-                     {load("rainwater.RData")
-                       rw <- get("rw")},
+                     {data("rw", envir=e1)
+                       rw <- get("rw", envir=e1)
+                       },
                      0)
               
               # load precipitation data
-              ifelse(length(P1) == 0, load("P1.RData"), 0)
+              ifelse(length(P1) == 0, {
+                data("P1", envir=e1)
+                P1 <- get("P1", envir=e1)
+                }, 0)
               
               # load structure characteristics
               #     ifelse(length(st) == 0,
@@ -174,10 +183,13 @@ setMethod("EmiStatR", signature = "input",
               #            )
               
               if (length(st) == 0){
-                dir.inputCSO <- paste(dir.shiny, "/EmiStatR_inputCSO/inputCSO", sep="")
-                setwd(dir.inputCSO)
-                data.sources = list.files(pattern="*.RData")
-                sapply(data.sources, load, envir = e1)} else {
+                # dir.inputCSO <- paste(dir.shiny, "/EmiStatR_inputCSO/inputCSO", sep="")
+                # setwd(dir.inputCSO)
+                # data.sources = list.files(pattern="*.RData")
+                # sapply(data.sources, load, envir = e1)} else {
+                data(E1, envir = e1)
+                data(E2, envir = e1)
+                data(E3, envir = e1)} else {
                   for(i in 1:length(st)){
                     assign(names(st)[i], st[[i]])
                   }} # rm("E1", "E2", "E3")
@@ -298,11 +310,13 @@ setMethod("EmiStatR", signature = "input",
             # a <- matrix
             
             ## calculating time series of pe
-            if(pe.daily.file != "" & pe.ts.file != ""){
-              stop("too many -pe- files are provided")
+            # if(pe.daily.file != "" & pe.ts.file != ""){
+            if(is.data.frame(pe.daily.file) == TRUE & pe.ts.file != ""){
+              stop("too many -pe- objects are provided")
             }
             
-            if(pe.daily.file == "" & pe.ts.file == ""){
+            # if(pe.daily.file == "" & pe.ts.file == ""){
+            if(is.data.frame(pe.daily.file) == FALSE & pe.ts.file == ""){
               pe.ts.season <- matrix(data = NA, nrow = length(P1[,1]), ncol = ncol-1)
               for(i in 1:(length(pe)-1)){
                 pe.ts.season[,i] <- pe[i+1]
@@ -310,7 +324,8 @@ setMethod("EmiStatR", signature = "input",
               }
             }
             
-            if(pe.daily.file == "" & pe.ts.file != ""){
+            # if(pe.daily.file == "" & pe.ts.file != ""){
+            if(is.data.frame(pe.daily.file) == FALSE & pe.ts.file != ""){
               pe.ts.season <- matrix(data = NA, nrow = nrow(P1), ncol = ncol-1)
               data.pe <- read.csv(pe.ts.file, header = T)
               
@@ -324,8 +339,8 @@ setMethod("EmiStatR", signature = "input",
               }
             }
             
-            if(pe.daily.file != "" & pe.ts.file == ""){
-              # pe.file <- paste(pe.daily.file, "/pe_factor.csv", sep="")
+            # if(pe.daily.file != "" & pe.ts.file == ""){
+            if(is.data.frame(pe.daily.file) == TRUE & pe.ts.file == ""){
               pe.ts <- list()
               # i <- 1
               for(i in 1:(length(pe)-1)){
@@ -346,17 +361,20 @@ setMethod("EmiStatR", signature = "input",
             }
 
             ## calculating time series of qs
-            if(qs.daily.file != "" & qs.ts.file != ""){
-              stop("too many -qs- files are provided")
+            # if(qs.daily.file != "" & qs.ts.file != ""){
+            if(is.data.frame(qs.daily.file) == TRUE & qs.ts.file != ""){
+              stop("too many -qs- objects are provided")
             }
             
-            if(qs.daily.file == "" & qs.ts.file == ""){
+            # if(qs.daily.file == "" & qs.ts.file == ""){
+            if(is.data.frame(qs.daily.file) == FALSE & qs.ts.file == ""){
               qs.ts.season <- matrix(data = NA, nrow = length(P1[,1]), ncol = 1)
               qs.ts.season[,1] <- ww[["qs"]]
               out[12,i+1] <- mean(qs.ts.season[,1])
             }
             
-            if(qs.daily.file == "" & qs.ts.file != ""){
+            # if(qs.daily.file == "" & qs.ts.file != ""){
+            if(is.data.frame(qs.daily.file) == FALSE & qs.ts.file != ""){
               data.qs <- read.csv(qs.ts.file, header = T)
               
               if(nrow(P1) != nrow(data.qs)){
@@ -367,9 +385,8 @@ setMethod("EmiStatR", signature = "input",
               out[12,i+1] <- mean(data.qs[,2])
             }
             
-            if(qs.daily.file != "" & pe.ts.file == ""){
-              # qs.file <- paste(pe.daily.file, "/qs_factor.csv", sep="")
-              # i <- 1
+            # if(qs.daily.file != "" & pe.ts.file == ""){
+            if(is.data.frame(qs.daily.file) == TRUE & qs.ts.file == ""){
               qs.ts <-CInp2TS(cinp = ww[["qs"]], prec = P1, cinp.daily.file = qs.daily.file,
                               cinp.weekly = qs.weekly, cinp.seasonal = qs.seasonal)
               qs.ts.season <- qs.ts[["data"]][,4]

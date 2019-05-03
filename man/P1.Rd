@@ -2,7 +2,7 @@
 \alias{P1}
 \docType{data}
 \title{
-An example of input time series for the EmiStatR package
+Dataset: An example of input time series for the EmiStatR package
 }
 \description{
 This dataset is a list that contains a data.frame with two columns: time [y-m-d h:m:s] and precipitation depth, P [mm]. 

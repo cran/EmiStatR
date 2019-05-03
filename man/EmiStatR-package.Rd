@@ -8,8 +8,7 @@
     design of urban drainage systems, without the requirement of extensive 
     simulation tools. The 'EmiStatR' package  
     implements modular R methods. This enables to add new 
-    functionalities through the R framework. Furthermore, 'EmiStatR' was implemented 
-    with an interactive user interface with sliders and input data exploration.
+    functionalities through the R framework. 
 }
 \details{
 
@@ -17,8 +16,8 @@ The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab EmiStatR  \cr
 Type:    \tab Package   \cr
-Version: \tab 1.2.1.1   \cr
-Date:    \tab 2018-07-04\cr
+Version: \tab 1.2.2.0   \cr
+Date:    \tab 2019-05-03\cr
 License: \tab GPL (>= 3)\cr
 Depends: \tab R (>= 2.10), methods, shiny \cr
 Imports: \tab utils, grDevices, graphics, stats, xts, zoo, foreach, parallel, lattice, doParallel \cr
@@ -35,9 +34,11 @@ Imports: \tab utils, grDevices, graphics, stats, xts, zoo, foreach, parallel, la
 
 Maintainer: J.A. Torres-Matallana
 }
-%\references{
-%~~ Literature or other references for background information ~~
-%}
+\references{
+J. A. Torres-Matallana, K. Klepiszewski, U. Leopold, and G.B.M. Heuvelink. EmiStatR: a simplified and
+scalable urban water quality model for simulation of combined sewer overflows. Water, 10(6)(782):1-24,
+2018. \url{https://www.mdpi.com/2073-4441/10/6/782/htm}
+}
 %~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
 \keyword{ package }
 \seealso{

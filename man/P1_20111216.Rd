@@ -2,7 +2,7 @@
 \alias{P1_20111216}
 \docType{data}
 \title{
-An example of input time series for the EmiStatR package
+Dataset: An example of input time series for the EmiStatR package
 }
 \description{
 This dataset is a data.frame with four columns: time [y-m-d h:m:s] and precipitation depth, P [mm] for Dahl, Eshc-sur-Sure and Eschdorf rain gauge stations. 
