@@ -20,7 +20,7 @@ The dataset correspond to measurements for January 2016 with time steps of 10 mi
 %%%  ~~ If necessary, more details than the __description__ above ~~
 %}
 \source{
-\url{http://agrimeteo.lu/}
+\url{https://www.agrimeteo.lu}
 }
 %\references{
 %%%  ~~ possibly secondary sources and usages ~~

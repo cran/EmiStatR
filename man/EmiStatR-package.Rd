@@ -16,8 +16,8 @@ The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab EmiStatR  \cr
 Type:    \tab Package   \cr
-Version: \tab 1.2.2.0   \cr
-Date:    \tab 2019-05-03\cr
+Version: \tab 1.2.3.0   \cr
+Date:    \tab 2021-09-13\cr
 License: \tab GPL (>= 3)\cr
 Depends: \tab R (>= 2.10), methods, shiny \cr
 Imports: \tab utils, grDevices, graphics, stats, xts, zoo, foreach, parallel, lattice, doParallel \cr

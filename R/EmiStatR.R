@@ -1,8 +1,8 @@
-# model EmiStatR version 1.2.2.0
+# model EmiStatR version 1.2.3.0
 # author: J.A. Torres-Matallana, K. Klepiszewski, U. Leopold, G.B.M. Heuvelink
-# organization: Luxembourg Institute of Science and technology (LIST)
+# organization: Luxembourg Institute of Science and Technology (LIST)
 #               Wagenigen university and Research Centre (WUR) 
-# date: 11.02.2015 - 02.05.2019
+# date: 11.02.2015 - 13.09.2021
 
 # ns    : name of the structure
 # 
@@ -479,10 +479,11 @@ setMethod("EmiStatR", signature = "input",
             # setwd(dir.output)
             
             setwd(dir.current)
-            dir.create("EmiStatR_output", showWarnings=FALSE)
-            dir.output <- paste(dir.current, "/EmiStatR_output", sep="")
-            setwd(dir.output)
-            
+            if(export == 1){
+              dir.create("EmiStatR_output", showWarnings=FALSE)
+              dir.output <- paste(dir.current, "/EmiStatR_output", sep="")
+              setwd(dir.output)
+            }
             
             # parallel computing
             # install.packages("foreach")
@@ -876,7 +877,8 @@ setMethod("EmiStatR", signature = "input",
             
             if(cores > 0){
               stopCluster(cl)
-              closeAllConnections()}
+              # closeAllConnections() # commented out for version 1.2.3.0 (to keep CRAN rules)
+              } 
             
             
             end <- proc.time()

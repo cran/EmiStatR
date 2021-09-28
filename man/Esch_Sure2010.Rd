@@ -21,7 +21,7 @@ The dataset correspond to measurements for 2010 with time steps of 10 minutes at
 %}
 
 \source{
-\url{http://agrimeteo.lu/}
+\url{https://www.agrimeteo.lu}
 }
 
 %\references{

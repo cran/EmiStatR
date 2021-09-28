@@ -53,13 +53,14 @@ Agg <- function(data, nameData, delta, func, namePlot){
     head(obs)
     length(obs$value)
     length(ts$x)
-
-    pdf(paste(namePlot, ".pdf", sep=""), pointsize=10)
-    par(mfrow = c(2,1))
-    par(cex.lab=1, cex.axis=1., cex.main = 1.5)
-    plot(obs$time,obs$value, type="l", main="Original time series", xlab = "Time", ylab = nameData)#------ commented after MC set-up
-    plot(ts[,1],ts$x, type="l", main=namePlot, xlab = "Time", ylab = nameData)
-    dev.off()
+    
+    # commented out to avoid creation of local file (pdf plot)
+    #pdf(paste(namePlot, ".pdf", sep=""), pointsize=10)
+    #par(mfrow = c(2,1))
+    #par(cex.lab=1, cex.axis=1., cex.main = 1.5)
+    #plot(obs$time,obs$value, type="l", main="Original time series", xlab = "Time", ylab = nameData)#------ commented after MC set-up
+    #plot(ts[,1],ts$x, type="l", main=namePlot, xlab = "Time", ylab = nameData)
+    #dev.off()
     
     colnames(ts) <- c("time", "value")
     obs <- ts

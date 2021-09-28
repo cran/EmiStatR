@@ -23,7 +23,7 @@ The three rain gauge stations are located close to the sub-catchment of the comb
 %%%  ~~ If necessary, more details than the __description__ above ~~
 %}
 \source{
-\url{http://agrimeteo.lu/}
+\url{https://www.agrimeteo.lu}
 }
 %\references{
 %%%  ~~ possibly secondary sources and usages ~~

@@ -25,7 +25,7 @@
   \item{func}{
     The name of the function of aggregation e.g. \code{mean}, \code{sum}.}
   \item{namePlot}{
-    A \code{character} string that defines the title of the plot generated.}
+    A \code{character} string that defines the title of the plot generated. Use "" to avoid writing the plot locally.}
 }
 %\details{
   %%  ~~ If necessary, more details than the description above ~~
@@ -61,7 +61,7 @@ head(P1)
 tail(P1)
 
 P1.agg <- Agg(data = P1, nameData = "value", delta = 120 , func = sum, 
-              namePlot = "Temporal aggregation of precipitation P1")
+              namePlot = "")
 
 head(P1.agg)
 tail(P1.agg)

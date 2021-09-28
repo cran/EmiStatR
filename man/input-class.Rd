@@ -180,7 +180,7 @@ input.user <- input(spatial = 0, zero = 1e-5, folder = getwd(),
                     ww = list(qs = 150, CODs = 104, NH4s = 4.7), 
                     inf = list(qf= 0.04, CODf = 0, NH4f =0),
                     rw = list(CODr = 0, NH4r = 0, stat = station), 
-                    P1 = P1, st = list(E1=E1), export = 1)
+                    P1 = P1, st = list(E1=E1), export = 0)
 
 str(input.user)
 
